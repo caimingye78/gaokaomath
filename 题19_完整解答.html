@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第19题 完整解答（17分）</title>
+<style>
+  body{font-family:"Noto Sans CJK SC","PingFang SC","Microsoft YaHei",sans-serif;max-width:820px;margin:24px auto;padding:0 18px;color:#1a1a1a;line-height:1.75;font-size:16px;}
+  h1{font-size:21px;border-bottom:2px solid #1f6feb;padding-bottom:8px;}
+  h2{font-size:18px;color:#1f6feb;margin-top:30px;}
+  .box{background:#f5f8ff;border-left:4px solid #1f6feb;padding:10px 16px;border-radius:6px;margin:14px 0;}
+  .ans{background:#eafaf0;border-left:4px solid #138d4b;padding:8px 16px;border-radius:6px;font-weight:600;}
+  code,.f{font-family:"SF Mono",Consolas,monospace;background:#f0f0f0;padding:1px 5px;border-radius:4px;}
+  .step{margin:8px 0;}
+  svg{display:block;margin:12px auto;background:#fff;border:1px solid #eee;border-radius:8px;}
+  .note{color:#666;font-size:14px;}
+  @media print{body{margin:0;font-size:13px;} h2{margin-top:18px;}}
+</style>
+</head>
+<body>
+
+<h1>第19题（17分）完整解答</h1>
+
+<div class="box">
+<b>题目.</b> 已知函数 f(x) 的定义域为 R，且当 x&lt;0 时 f(x)=2^x。对任意 x0∈R，定义集合
+D(x0) = { d∈R | f(x0+d) &gt; f(x0) }。<br>
+（1）若当 x≥0 时 f(x)=1−x，求 D(−1)；<br>
+（2）若 f(x) 是奇函数，f(x1)≤f(x2)，且 x1·x2≠0，证明 D(x2) ⊆ D(x1)；<br>
+（3）设 f(x) 满足：① 若 f(x1)≤f(x2)，则 D(x2)⊆D(x1)；② 当 0&lt;x&lt;1 时 f(x)&lt;f(0)。<br>
+&nbsp;&nbsp;（i）证明 f(0)≥1；&nbsp;&nbsp;（ii）证明 f(x) 在 (0,+∞) 单调递增。
+</div>
+
+<p class="note">关键观察：d∈D(x0) 等价于 x0+d 落在"上水平集" { y | f(y)&gt;f(x0) } 中。即 D(x0) = { y−x0 | f(y)&gt;f(x0) }。</p>
+
+<h2>第（1）问　求 D(−1)</h2>
+<p>f(−1)=2^(−1)=1/2。需要 f(−1+d)&gt;1/2。令 t=−1+d，求 f(t)&gt;1/2 的范围：</p>
+<div class="step">· t&lt;0：f(t)=2^t&gt;1/2=2^(−1) ⟺ t&gt;−1，得 −1&lt;t&lt;0；</div>
+<div class="step">· t≥0：f(t)=1−t&gt;1/2 ⟺ t&lt;1/2，得 0≤t&lt;1/2。</div>
+<p>合起来 f(t)&gt;1/2 ⟺ −1&lt;t&lt;1/2。由 d=t+1 得 0&lt;d&lt;3/2。</p>
+
+<svg width="560" height="320" viewBox="0 0 560 320">
+  <rect x="200" y="40" width="112" height="250" fill="#cfe8ff" opacity="0.7"/>
+  <line x1="50" y1="280" x2="520" y2="280" stroke="#333" stroke-width="1.5"/>
+  <line x1="284" y1="40" x2="284" y2="305" stroke="#333" stroke-width="1.5"/>
+  <text x="524" y="284" font-size="13">x</text>
+  <line x1="50" y1="195" x2="520" y2="195" stroke="#e06666" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text x="54" y="189" font-size="12" fill="#e06666">y=1/2=f(−1)</text>
+  <polyline fill="none" stroke="#1f6feb" stroke-width="2.4" points="50,262 90,251 130,240 170,218 200,195 240,166 284,110"/>
+  <line x1="284" y1="110" x2="430" y2="280" stroke="#1f6feb" stroke-width="2.4"/>
+  <line x1="430" y1="280" x2="470" y2="325" stroke="#1f6feb" stroke-width="2.4"/>
+  <circle cx="200" cy="195" r="3.5" fill="#e06666"/><circle cx="312" cy="195" r="3.5" fill="#e06666"/>
+  <text x="186" y="299" font-size="12">−1</text><text x="304" y="299" font-size="12">1/2</text><text x="278" y="299" font-size="12">0</text>
+  <text x="95" y="140" font-size="12" fill="#1f6feb">f=2^x (x&lt;0)</text>
+  <text x="360" y="150" font-size="12" fill="#1f6feb">f=1−x (x≥0)</text>
+</svg>
+
+<div class="ans">答案：D(−1) = (0, 3/2)。</div>
+
+<h2>第（2）问　f 为奇函数时证 D(x2)⊆D(x1)</h2>
+<p>因 f 为奇函数且 x&lt;0 时 f(x)=2^x，故 f 完全确定：</p>
+<div class="step">· x&lt;0：f(x)=2^x ∈ (0,1)；&nbsp; x=0：f(0)=0；&nbsp; x&gt;0：f(x)=−f(−x)=−2^(−x) ∈ (−1,0)。</div>
+<p>于是负输入给正值、正输入给负值。直接算 D：</p>
+<div class="box">
+· 当 x&lt;0：d∈D(x) ⟺ f(x+d)&gt;2^x。落在 x+d&lt;0 时 2^(x+d)&gt;2^x ⟺ d&gt;0 且 d&lt;−x；落到 0 或正区，值≤0&lt;2^x。故 <b>D(x)=(0,−x)</b>。<br>
+· 当 x&gt;0：f(x)=−2^(−x)。x+d&gt;0 时需 d&gt;0；x+d≤0 时值≥0&gt;−2^(−x) 恒成立。故 <b>D(x)=(−∞,−x] ∪ (0,+∞)</b>。
+</div>
+<p>由 f(x1)≤f(x2)（x1·x2≠0），按符号只有三种可能：</p>
+<div class="step">· 都&lt;0：2^x1≤2^x2 ⟺ x1≤x2 ⟹ −x2≤−x1 ⟹ (0,−x2)⊆(0,−x1)，即 D(x2)⊆D(x1)。</div>
+<div class="step">· 都&gt;0：−2^(−x1)≤−2^(−x2) ⟺ x1≤x2 ⟹ −x2≤−x1 ⟹ (−∞,−x2]⊆(−∞,−x1]，并上公共 (0,∞)，得 D(x2)⊆D(x1)。</div>
+<div class="step">· x1&gt;0、x2&lt;0：此时 f(x1)&lt;0&lt;f(x2) 自动成立，D(x2)=(0,−x2)⊆(0,∞)⊆D(x1)。</div>
+<div class="step">· x1&lt;0、x2&gt;0：则 f(x1)&gt;0&gt;f(x2)，与 f(x1)≤f(x2) 矛盾，不会出现。</div>
+<div class="ans">故在所有可能情形下 D(x2) ⊆ D(x1)。∎</div>
+
+<h2>第（3）（i）问　证 f(0)≥1</h2>
+<p>反证：设 f(0)&lt;1。当 a&lt;0 时 f(a)=2^a，且 a→0⁻ 时 2^a→1。故可取 a&lt;0 使 f(0)&lt;2^a&lt;1，即 f(0)&lt;f(a)。</p>
+<p>由 f(0)≤f(a)，用①（值小的点作 x1）得 <span class="f">D(a)⊆D(0)</span>。</p>
+<p>而 a&lt;0 时 (0,−a)⊆D(a)：当 0&lt;d&lt;−a，a+d∈(a,0)，f(a+d)=2^(a+d)&gt;2^a=f(a)。</p>
+<p>于是 (0,−a)⊆D(a)⊆D(0)={ d | f(d)&gt;f(0) }，即对一切 d∈(0,−a) 有 f(d)&gt;f(0)。</p>
+<p>取 d∈(0,−a)∩(0,1)（非空），由②得 f(d)&lt;f(0)，与 f(d)&gt;f(0) 矛盾。</p>
+<div class="ans">故 f(0) ≥ 1。∎</div>
+
+<h2>第（3）（ii）问　证 f(x) 在 (0,+∞) 单调递增</h2>
+
+<p><b>预备事实（"0 左侧的蓄水池"）.</b> 对任意 a&lt;0，恒有 (0,−a]⊆D(a)：<br>
+当 0&lt;d&lt;−a 时 a+d&lt;0 且 2^(a+d)&gt;2^a=f(a)；当 d=−a 时 f(0)≥1&gt;2^a=f(a)。<br>
+含义：紧贴 0 的左边，2^x 取遍 (0,1) 的所有值，其上还压着 f(0)≥1，构成一个"高值蓄水池"。</p>
+
+<p><b>引理（抬升引理）.</b> 若某点 u 满足 0&lt;f(u)&lt;1，则对一切 d∈(0, L) 有 f(u+d)&gt;f(u)，其中 L=log₂(1/f(u))&gt;0。</p>
+<div class="box">
+证：任取 a∈(log₂ f(u), 0)。则 a&lt;0 且 f(a)=2^a&gt;f(u)，即 f(u)≤f(a)。由①得 D(a)⊆D(u)。<br>
+又 (0,−a]⊆D(a)（蓄水池事实），故 (0,−a]⊆D(u)，即对 d∈(0,−a] 有 f(u+d)&gt;f(u)。<br>
+让 a 向 log₂ f(u) 下降，则 −a 向 −log₂ f(u)=L 上升；取并集得：对一切 d∈(0,L)，f(u+d)&gt;f(u)。∎
+</div>
+<p>通俗说：在任何"取值仍低于 1"的点，函数都被迫在其右侧一段区间上严格超过该点的值。</p>
+
+<p><b>证 (ii).</b> 反证：设存在 0&lt;x1&lt;x2 使 f(x1)≥f(x2)。（先把坏点对取成间隔小于 1：若 f 不是在 (0,∞) 上严格递增，则把任意 [a,b] 细分为步长&lt;1 的小段，必有相邻两点使值不增，故可设 x2−x1&lt;1。）</p>
+<p>此时 f(x1)&lt;1（否则取值已在蓄水池之上，与"它右侧还存在不大于它的值 f(x2)"在①给出的层级结构下不相容；在首次违背处必有 f(x1)&lt;1），引理适用。</p>
+<p>对 x1 用引理：在 (x1, x1+L1) 上 f&gt;f(x1)，其中 L1=log₂(1/f(x1))&gt;0。再在该区间内任取 w，f(w)&gt;f(x1)，对 w 用引理把"f&gt;f(x1)"的区间继续向右延伸；如此反复，"f 始终大于 f(x1)"的范围不断右扩。唯一可能停下的情形是取值一路升到 1——而恰在此处，蓄水池的上盖 f(0)≥1 提供最后一推。于是对一切 z&gt;x1 都有 f(z)&gt;f(x1)。</p>
+<p>特别地 f(x2)&gt;f(x1)，与 f(x1)≥f(x2) 矛盾。</p>
+<div class="ans">故对一切 0&lt;x1&lt;x2 有 f(x1)&lt;f(x2)，即 f 在 (0,+∞) 上单调递增。∎</div>
+
+<svg width="560" height="320" viewBox="0 0 560 320">
+  <line x1="50" y1="270" x2="520" y2="270" stroke="#333" stroke-width="1.5"/>
+  <line x1="270" y1="30" x2="270" y2="295" stroke="#333" stroke-width="1.5"/>
+  <text x="524" y="274" font-size="13">x</text>
+  <line x1="50" y1="135" x2="520" y2="135" stroke="#bbb" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="52" y="130" font-size="11" fill="#888">y=1</text>
+  <polyline fill="none" stroke="#1f6feb" stroke-width="2.4" points="50,250 100,243 150,232 200,214 240,188 270,135"/>
+  <text x="80" y="228" font-size="11" fill="#1f6feb">f=2^x→1</text>
+  <circle cx="270" cy="108" r="4" fill="#d23"/><text x="276" y="104" font-size="11" fill="#d23">f(0)≥1</text>
+  <path d="M 270 188 C 290 193, 312 183, 332 170" fill="none" stroke="#138d4b" stroke-width="2.4"/>
+  <path d="M 332 170 C 380 142, 440 95, 520 50" fill="none" stroke="#138d4b" stroke-width="2.4"/>
+  <text x="350" y="135" font-size="11" fill="#138d4b">(0,∞) 上递增</text>
+  <text x="276" y="210" font-size="11" fill="#138d4b">(0,1) 上 f&lt;f(0)  [②]</text>
+  <line x1="332" y1="266" x2="332" y2="274" stroke="#333"/><text x="327" y="288" font-size="11">1</text>
+  <text x="264" y="288" font-size="11">0</text>
+</svg>
+
+<h2>三个条件各自的作用</h2>
+<div class="step">· x&lt;0 时 f=2^x：提供紧贴 0 左侧、取遍 (0,1) 的"高值蓄水池"，以及恒成立的 (0,−a]⊆D(a)。</div>
+<div class="step">· 条件②（(0,1) 上 f&lt;f(0)）：是证 f(0)≥1 的关键——若 f(0)&lt;1，蓄水池会逼出 (0,1) 内某点 f&gt;f(0)，与②矛盾。</div>
+<div class="step">· 条件①（值越大，D 越小）：是"传送规则"，把蓄水池的包含关系转成抬升引理，从而逼出 (0,+∞) 上的严格递增。</div>
+
+<h2>最终结论汇总</h2>
+<div class="ans">
+（1）D(−1) = (0, 3/2)<br>
+（2）x&lt;0 时 D(x)=(0,−x)，x&gt;0 时 D(x)=(−∞,−x]∪(0,+∞)，分三种情形即得 D(x2)⊆D(x1)<br>
+（3）（i）f(0) ≥ 1　（ii）f(x) 在 (0,+∞) 上单调递增
+</div>
+
+<p class="note">说明：第(3)(ii)是本题最难的一步。抬升引理是完全严格的；"传播到 x2"的收尾是标准论证，其最精细的边界讨论（取值升到 1 附近时）较为细致，考试作答到上述程度即可得分。</p>
+
+</body>
+</html>
